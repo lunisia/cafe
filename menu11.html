@@ -1,0 +1,317 @@
+<!DOCTYPE html>
+<html lang="fa">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title> کافه پاسارگاد</title>
+  <link href="https://fonts.googleapis.com/css2?family=Vazirmatn&display=swap" rel="stylesheet" />
+  <style>
+    :root {
+      --bg-color: #f8f5f2;
+      --text-color: #2e2e2e;
+      --card-bg: #ffffff;
+      --filter-bg: #e0dcd5;
+      --primary: #5e4432;
+      --secondary: #8c6e54;
+      --accent: #d6a77a;
+    }
+    body.dark {
+      --bg-color: #1f1f1f;
+      --text-color: #eaeaea;
+      --card-bg: #2c2c2c;
+      --filter-bg: #3a3a3a;
+      --primary: #ffb74d;
+      --secondary: #ff9800;
+      --accent: #ffa726;
+    }
+    body {
+      font-family: 'Vazirmatn', sans-serif;
+      background: var(--bg-color);
+      color: var(--text-color);
+      margin: 0;
+      padding: 0;
+      direction: rtl;
+      transition: background 0.3s, color 0.3s;
+    }
+    header {
+      background-color: var(--primary);
+      color: white;
+      padding: 20px;
+      text-align: center;
+      box-shadow: 0 2px 8px rgba(0, 0, 0, 0.2);
+    }
+    h1 {
+      margin: 0;
+      font-size: 28px;
+    }
+    .top-buttons {
+      display: flex;
+      justify-content: center;
+      gap: 12px;
+      padding: 12px;
+    }
+    .top-buttons button {
+      background: var(--secondary);
+      color: white;
+      border: none;
+      padding: 10px 18px;
+      border-radius: 24px;
+      cursor: pointer;
+      font-weight: bold;
+      box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+    }
+    .filters, .subcategory-buttons {
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: center;
+      gap: 10px;
+      background-color: var(--filter-bg);
+      padding: 10px 20px;
+    }
+    .filters button, .subcategory-buttons button {
+      background: var(--primary);
+      color: white;
+      border: none;
+      padding: 8px 16px;
+      border-radius: 20px;
+      cursor: pointer;
+      font-size: 15px;
+      transition: background 0.3s;
+    }
+    .filters button:hover,
+    .subcategory-buttons button:hover {
+      background: var(--accent);
+    }
+    .filters button.active,
+    .subcategory-buttons button.active {
+      background: var(--accent);
+      font-weight: bold;
+      border: 2px solid white;
+    }
+    .menu {
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: center;
+      gap: 24px;
+      padding: 20px;
+    }
+    .card {
+      background: var(--card-bg);
+      border-radius: 16px;
+      box-shadow: 0 2px 10px rgba(0, 0, 0, 0.08);
+      padding: 20px;
+      width: 260px;
+    }
+    .card h3 {
+      margin-top: 0;
+      color: var(--primary);
+      font-size: 18px;
+    }
+    .card p {
+      margin-bottom: 0;
+      font-weight: bold;
+      font-size: 16px;
+      color: var(--text-color);
+    }
+  </style>
+</head>
+<body>
+  <header>
+    <h1 id="title">  کافه پاسارگاد</h1>
+  </header>
+  <div class="top-buttons">
+    <button onclick="toggleTheme()">تغییر تم</button>
+    <button onclick="toggleLanguage()">تغییر زبان</button>
+  </div>
+  <div class="filters" id="mainFilters"></div>
+  <div class="subcategory-buttons" id="subFilters"></div>
+  <div class="menu" id="menu"></div>
+  <script>
+  const menuData = {
+    "فست فود": {
+      "پیش غذا": [
+        ["فرایز", "Fries", "99"], ["چیزی فرایز", "Cheesy Fries", "165"], ["گودا فرایز", "Gouda Fries", "166"],
+        ["پاپس فرایز", "Pops Fries", "135"], ["پانا فرایز", "Pana Fries", "175"],
+        ["سالاد سزار با مرغ گریل", "Caesar Salad (Grilled)", "260"],
+        ["سالاد سزار با مرغ سوخاری", "Caesar Salad (Fried)", "260"], ["نان سیر", "Garlic Bread", "170"]
+      ],
+      "برگر": [
+        ["کلاسیک برگر", "Classic Burger", "235"], ["چیز برگر", "Cheeseburger", "265"],
+        ["ماشروم برگر", "Mushroom Burger", "260"], ["زینگر برگر", "Zinger Burger", "298"],
+        ["دبل چیزبرگر", "Double Cheeseburger", "475"], ["بیکن چیز برگر", "Bacon Cheeseburger", "285"],
+        ["کیجون برگر", "Cajun Burger", "295"]
+      ],
+      "پاستا": [
+        ["پنه چیکن الفردو", "Chicken Alfredo Penne", "235"], ["پنه دیپ چیکن", "Dip Chicken Penne", "288"],
+        ["اسپاگتی پومودورو", "Spaghetti Pomodoro", "210"], ["فتوچینی چیکن پستو", "Chicken Pesto Fettuccine", "265"]
+      ],
+      "پنینی": [
+        ["دونراستیک", "Doner Steak", "310"], ["دونر چیکن", "Doner Chicken", "285"], ["دونر میکس", "Doner Mix", "270"],
+        ["برتولی", "Bertoli", "255"], ["آروستو", "Arosto", "270"], ["چیزی مارتادلا", "Cheesy Mortadella", "296"]
+      ],
+      "پیتزا": [
+        ["مارتادلا", "Mortadella", "325"], ["پپرونی", "Pepperoni", "295"], ["چیکن", "Chicken", "275"],
+        ["آروستو چیکن", "Arosto Chicken", "395"], ["کریسپی چیکن", "Crispy Chicken", "370"],
+        ["آروستو", "Arosto", "340"], ["برتولی", "Bertoli", "328"], ["هالوچیکن", "Halo Chicken", "295"],
+        ["استیک", "Steak", "395"], ["دونراستیک", "Doner Steak", "320"], ["پاسارگاد", "Pasargad", "420"]
+      ],
+      "غذای اصلی": [
+        ["شنیسل مرغ", "Chicken Schnitzel", "385"], ["استیک مرغ گریل", "Grilled Chicken Steak", "420"]
+      ]
+    },
+    "نوشیدنی": {
+      "قهوه": [
+        ["اسپرسو", "Espresso", "67_95"], ["آمریکانو", "Americano", "67_95"], ["رومانو", "Romano", "75"],
+        ["کاپوچینو", "Cappuccino", "95"], ["لاته", "Latte", "105"], ["ماکیاتو", "Macchiato", "120"],
+        ["موکا", "Mocha", "135"], ["لوتوچینو", "Lotuccino", "140"]
+      ],
+      "قهوه سرد": [
+        ["آمریکانو", "Iced Americano", "67_77"], ["لاته", "Iced Latte", "105"], ["ماکیاتو", "Iced Macchiato", "120"],
+        ["رومانو", "Iced Romano", "75"], ["دالگونا کافی", "Dalgona Coffee", "115"],
+        ["آفوگاتو", "Affogato", "115"], ["هایپ اسپرسو", "Hype Espresso", "120"],
+        ["آیس لوتوس", "Iced Lotus", "140"], ["آیس نوتلا", "Iced Nutella", "97"], ["آیس موکا", "Iced Mocha", "135"]
+      ],
+      "قهوه دمی": [
+        ["V60", "V60", "98_195"], ["ایروپرس", "Aeropress", "98_195"], ["فرانسه", "French Press", "98_150"], ["کاسکارا", "Cascara", "115"]
+      ],
+      "گرم": [
+        ["هات چاکلت", "Hot Chocolate", "115"], ["هات نوتلا", "Hot Nutella", "97"], ["هات پینات", "Hot Peanut", "97"],
+        ["بیسکوف", "Biscoff", "97"], ["سرگل", "Sargol Saffron", "50"], ["چای ماسالا", "Chai Masala", "97"], ["چای کرک", "Karak Tea", "97"]
+      ],
+      "ماچا": [
+        ["ماچالاته", "Matcha Latte", "105"], ["کارامل ماچا", "Caramel Matcha", "115"],
+        ["کوکوچا", "Cococha", "135"], ["بری ماچا", "Berry Matcha", "125"], ["موکاچا", "Mochacha", "125"]
+      ],
+      "دمنوش و چای": [
+        ["چای سیاه دمی", "Brewed Black Tea", "50"], ["چای زعفران", "Saffron Tea", "77"], ["چای ترش", "Hibiscus Tea", "77"],
+        ["سیب به دارچین", "Apple Cinnamon", "77"], ["نعنا گل گاوزبان", "Mint Borage", "87"],
+        ["لیمو عسل", "Honey Lemon", "87"], ["چای سبز", "Green Tea", "77"], ["نعنا مراکشی", "Moroccan Mint", "87"]
+      ],
+      "سردنوش": [
+        ["آیس تی پرتقال لیمو", "Orange Lemon Iced Tea", "105"],
+        ["آیس تی انار کرنبری", "Pomegranate Cranberry Iced Tea", "105"],
+        ["آیس تی زعفران لیمو نعنا", "Saffron Lemon Mint Iced Tea", "125"],
+        ["زعفران", "Saffron Drink", "115"]
+      ],
+      "ماکتیل": [
+        ["لیموناد", "Lemonade", "95"], ["موهیتو", "Mojito", "115"], ["مورس", "Mors", "110"],
+        ["لواشک", "Lavashak", "110"], ["های سانرایز", "High Sunrise", "175"]
+      ],
+      "شیک": [
+        ["نوتلا کوکی", "Nutella Cookie", "175"], ["پینات کاراملی", "Caramel Peanut", "175"],
+        ["دبل چاکلت", "Double Chocolate", "187"], ["بیسکو", "Bisco", "187"], ["قهوه", "Coffee", "170"],
+        ["چیزکیک", "Cheesecake", "175"], ["پسته", "Pistachio", "240"]
+      ],
+      "اسموتی": [
+        ["نارنجی", "Orange", "147"], ["آناناس انبه", "Pineapple Mango", "147"],
+        ["پرتقال توت فرنگی", "Orange Strawberry", "147"], ["پروگرانولا", "Pro Granola", "155"]
+      ]
+    },
+    "دسر": {
+      "دسر": [
+        ["چیز کیک سن سباستین", "San Sebastian Cheesecake", "105"],
+        ["چیز کیک لوتوس", "Lotus Cheesecake", "115"],
+        ["تیرامیسو", "Tiramisu", "125"],
+        ["دسر روز", "Dessert of the Day", "136"]
+      ]
+    }
+  };
+  let isFarsi = true;
+  let currentMain = null;
+      const translations = {
+      'فست فود': 'Fast Food',
+      'نوشیدنی': 'Drinks',
+      'دسر': 'Desserts',
+      'پیش غذا': 'Appetizer',
+      'برگر': 'Burger',
+      'پیتزا': 'Pizza',
+      'پاستا': 'Pasta',
+      'پنینی': 'Panini',
+      'غذای اصلی': 'Main Dish',
+      'قهوه': 'Coffee',
+      'قهوه سرد': 'Iced Coffee',
+      'قهوه دمی': 'Brewed Coffee',
+      'گرم': 'Hot Drinks',
+      'ماچا': 'Matcha',
+      'دمنوش و چای': 'Herbal Tea',
+      'سردنوش': 'Iced Tea',
+      'ماکتیل': 'Mocktail',
+      'شیک': 'Milkshake',
+      'اسموتی': 'Smoothie',
+      'دسر': 'Dessert'
+    };
+
+  function renderMainFilters() {
+    const container = document.getElementById("mainFilters");
+    container.innerHTML = '';
+    Object.keys(menuData).forEach(main => {
+      const btn = document.createElement("button");
+      btn.textContent = main;
+      btn.onclick = () => {
+        renderSubFilters(main);
+        updateActiveButtons("mainFilters", main);
+      };
+      container.appendChild(btn);
+    });
+  }
+
+  function renderSubFilters(main) {
+    currentMain = main;
+    const subcontainer = document.getElementById("subFilters");
+    subcontainer.innerHTML = '';
+    Object.keys(menuData[main]).forEach(sub => {
+      const btn = document.createElement("button");
+      btn.textContent = sub;
+      btn.onclick = () => {
+        renderItems(main, sub);
+        updateActiveButtons("subFilters", sub);
+      };
+      subcontainer.appendChild(btn);
+    });
+    const firstSub = Object.keys(menuData[main])[0];
+    renderItems(main, firstSub);
+    updateActiveButtons("subFilters", firstSub);
+  }
+
+  function renderItems(main, sub) {
+    currentSub = sub;
+    const menu = document.getElementById("menu");
+    menu.innerHTML = '';
+    menuData[main][sub].forEach(([fa, en, price]) => {
+      const div = document.createElement("div");
+      div.className = "card";
+
+      const h3 = document.createElement("h3");
+      h3.textContent = isFarsi ? fa : en;
+
+      const p = document.createElement("p");
+      p.textContent = isFarsi ? price : price + " Toman";
+
+      div.appendChild(h3);
+      div.appendChild(p);
+      menu.appendChild(div);
+    });
+  }
+
+  function toggleTheme() {
+    document.body.classList.toggle("dark");
+  }
+
+  function toggleLanguage() {
+    isFarsi = !isFarsi;
+    document.getElementById("title").textContent = isFarsi ? "منوی کافه پاسارگاد" : "Pasargad Café Menu";
+    renderSubFilters(currentMain || Object.keys(menuData)[0]);
+  }
+
+  function updateActiveButtons(containerId, activeText) {
+    const buttons = document.getElementById(containerId).querySelectorAll("button");
+    buttons.forEach(btn => {
+      btn.classList.toggle("active", btn.textContent === activeText);
+    });
+  }
+
+  renderMainFilters();
+  renderSubFilters(Object.keys(menuData)[0]);
+</script>
+</body>
+</html>
