@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <title> کافه پاسارگاد</title>
+  <title>Pasargad café</title>
   <link href="https://fonts.googleapis.com/css2?family=Vazirmatn&display=swap" rel="stylesheet" />
   <style>
     :root {
@@ -20,9 +20,9 @@
       --text-color: #eaeaea;
       --card-bg: #2c2c2c;
       --filter-bg: #3a3a3a;
-      --primary: #ffb74d;
-      --secondary: #ff9800;
-      --accent: #ffa726;
+      --primary: #ff7b00d8;
+      --secondary: #ffb13c;
+      --accent: #ff9900;
     }
     body {
       font-family: 'Vazirmatn', sans-serif;
@@ -52,7 +52,7 @@
     }
     .top-buttons button {
       background: var(--secondary);
-      color: white;
+      color: rgb(255, 255, 255);
       border: none;
       padding: 10px 18px;
       border-radius: 24px;
@@ -68,14 +68,28 @@
       background-color: var(--filter-bg);
       padding: 10px 20px;
     }
-    .filters button, .subcategory-buttons button {
+    .filters button {
       background: var(--primary);
-      color: white;
+      color: rgb(255, 255, 255);
       border: none;
       padding: 8px 16px;
       border-radius: 20px;
       cursor: pointer;
-      font-size: 15px;
+      font-family: 'vazirmatn';
+      font-size: 20px;
+      font-weight: bold;
+      transition: background 0.3s;
+    }
+    .subcategory-buttons button {
+      background: var(--secondary);
+      color: rgb(255, 255, 255);
+      border: none;
+      padding: 4px 12px;
+      border-radius: 20px;
+      cursor: pointer;
+      font-family: 'vazirmatn';
+      font-size: 16px;
+      font-weight: bold;
       transition: background 0.3s;
     }
     .filters button.active,
@@ -88,15 +102,8 @@
       display: flex;
       flex-wrap: wrap;
       justify-content: center;
-      gap: 24px;
-      padding: 20px;
-    }
-    .card {
-      background: var(--card-bg);
-      border-radius: 16px;
-      box-shadow: 0 2px 10px rgba(0, 0, 0, 0.08);
-      padding: 20px;
-      width: 260px;
+      gap: 22px;
+      padding: 18px;
     }
     .card h3 {
       margin-top: 0;
@@ -109,6 +116,32 @@
       font-size: 16px;
       color: var(--text-color);
     }
+    .card {
+  direction: ltr;
+  display: flex;
+       flex-direction: row-reverse;
+     justify-content: space-between;
+  align-items: center;
+  gap: 12px;
+  background: var(--card-bg);
+  border-radius: 16px;
+  box-shadow: 0 2px 10px rgba(0, 0, 0, 0.08);
+  padding: 16px;
+  width: 320px;
+}
+
+.menu-image {
+  width: 77px;
+  height: 77px;
+  object-fit: cover;
+  border-radius: 12px;
+}
+
+.menu-content {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+}
   </style>
 </head>
 <body>
@@ -130,8 +163,8 @@
           {
           key: ["پیش غذا", "Appetizers"],
           items: [
-            ["فرایز", "Fries", "99,000"],
-            ["چیزی فرایز", "Cheesy Fries", "165000","https://lunisia.github.io/cafe/11.jpg"],
+            ["فرایز", "Fries", "99,000","https://lunisia.github.io/cafe/11.jpg"],
+            ["چیزی فرایز", "Cheesy Fries", "165,000","https://lunisia.github.io/cafe/11.jpg"],
             ["گودا فرایز", "Gouda Fries", "166,000"],
             ["پاپس فرایز", "Pops Fries", "135,000"],
             ["پانا فرایز", "Pana Fries", "175,000"],
@@ -244,7 +277,7 @@
         {
           key: ["قهوه دمی", "Brewed Coffee"],
           items: [
-            ["V60", "V60", "98_195"],
+            ["V60", "V60", "98,000_195,000"],
             ["ایروپرس", "Aeropress", "98,000-195,000"], 
             ["فرانسه", "French Press", "98,000_150,000"], 
             ["کاسکارا", "Cascara", "115,000"]
@@ -340,6 +373,34 @@
           ]
         }
       ]
+    },
+    {
+      key:["اسموک بار","Hookah"],
+      subs: [
+        {
+          key:["اسموک بار","Hookah"],
+          items:[
+            ["پرتقال نعنا","Orange Mint","260,000"],
+            ["پرتقال خامه","Orange Cream","260,000"],
+            [" آلو یخ","Ice Plum","260,000"],
+            [" دو سیب"," Double Apple","260,000"],
+            ["دو سیب آلبالو ","Double Apple Cherry ","260,000"],
+            ["هاوانا "," Havana","260,000"],
+            ["موسکو نایت "," Moscow Night","260,000"],
+            ["پاریس نایت"," Paris Night","260,000"],
+            [" انبه","Mango","260,000"],
+            ["بستنی "," Ice Cream","260,000"],
+            ["کیس "," Kiss","260,000"],
+            ["کاپوچینو ","Cappuccino","260,000"],
+            ["موهیتو ","Mojito","260,000"],
+            ["آدامس دارچین ","Cinnamon Gum","260,000"],
+            ["سیب یخ ","Iced Apple","260,000"],
+            [" هندوانه یخ ","Iced Watermelon","260,000"],
+            ["آفساید ","Offside","260,000"],
+
+          ]
+        }
+      ]
     }
   ];
   let isFarsi = true;
@@ -389,27 +450,39 @@
     });
     renderItems(mainIndex, currentSub);
   }
-
   function renderItems(mainIndex, subIndex) {
-    const container = document.getElementById("menu");
-    container.innerHTML = "";
-    const items = menuData[mainIndex].subs[subIndex].items;
-    items.forEach(([fa, en, price]) => {
-      const card = document.createElement("div");
-      card.className = "card";
+  const container = document.getElementById("menu");
+  container.innerHTML = "";
 
-      const h3 = document.createElement("h3");
-      h3.textContent = isFarsi ? fa : en;
+  const items = menuData[mainIndex].subs[subIndex].items;
 
-      const p = document.createElement("p");
-      p.textContent = price + (isFarsi ? "  تومان" : " Toman");
+items.forEach(([fa, en, price, imgSrc]) => {
+  const card = document.createElement("div");
+  card.className = "card";
 
-      card.appendChild(h3);
-      card.appendChild(p);
-      container.appendChild(card);
-    });
-  }
+  const image = document.createElement("img");
+  image.src = imgSrc || "";
+  image.alt = fa;
+  image.className = "menu-image";
 
+  const content = document.createElement("div");
+  content.className = "menu-content";
+
+  const h3 = document.createElement("h3");
+  h3.textContent = isFarsi ? fa : en;
+
+  const p = document.createElement("p");
+  p.textContent = price + (isFarsi ? " تومان" : " Toman");
+
+  content.appendChild(h3);
+  content.appendChild(p);
+
+  card.appendChild(image);
+  card.appendChild(content);
+
+  container.appendChild(card);
+});
+}
   renderMainFilters();
   renderSubFilters(0);
 </script>
