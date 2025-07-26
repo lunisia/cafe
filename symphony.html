@@ -3,8 +3,10 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Symphony Cafe Menu</title>
+  <title>Symphony Cafe</title>
   <link href="https://fonts.googleapis.com/css2?family=Shabnam&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" />
+
   <style>
     body {
       margin: 0;
@@ -17,6 +19,72 @@
         linear-gradient(to bottom, rgba(0, 128, 0, 0.1) 1px, transparent 1px);
       background-size: 37px 37px;
       color: #222;
+    }
+
+    .welcome, .menu, .about {
+      max-width: 1000px;
+      margin: 0 auto;
+      display: none;
+      animation: fadeIn 0.6s ease;
+    }
+
+    .welcome.active, .menu.active, .about.active {
+      display: block;
+    }
+
+    @keyframes fadeIn {
+      from { opacity: 0; transform: translateY(10px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+
+    .center-box {
+      text-align: center;
+      margin-top: 80px;
+    }
+
+    .big-button {
+      display: block;
+      width: 200px;
+      margin: 20px auto;
+      padding: 12px;
+      font-size: 18px;
+      font-weight: bold;
+      background-color: #0077cc;
+      color: white;
+      border: none;
+      border-radius: 12px;
+      cursor: pointer;
+      transition: background 0.3s ease;
+    }
+
+    .big-button:hover {
+      background-color: #005fa3;
+    }
+
+    .about-info {
+      background: rgba(255,255,255,0.6);
+      box-shadow: 0 0 10px #ccc;
+      border-radius: 16px;
+      padding: 30px;
+      line-height: 2;
+      font-size: 18px;
+    }
+
+    .about-info p {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      font-size: 18px;
+    }
+
+    .about-info a {
+      color: #0077cc;
+      text-decoration: none;
+    }
+
+    .about-info i {
+      font-size: 20px;
+      color: #444;
     }
 
     .custom-title {
@@ -70,36 +138,44 @@
       height: auto;
     }
 
-    .menu {
-      max-width: 1000px;
-      margin: 0 auto;
+    .notice-box {
+      margin-top: 40px;
+      background: rgba(255, 255, 255, 0.7);
+      border: 1px dashed #aaa;
+      padding: 20px;
+      border-radius: 12px;
+      text-align: center;
+      font-size: 17px;
+      line-height: 2;
+      max-width: 500px;
+      margin-left: auto;
+      margin-right: auto;
     }
 
-    .grid {
-      display: flex;
-      flex-wrap: wrap;
-      gap: 8px;
+    .menu-notes {
+      text-align: center;
+      background: #ffffffbb;
+      border: 1px solid #ccc;
+      border-radius: 12px;
+      padding: 20px;
+      margin-bottom: 30px;
+      font-size: 18px;
+      font-weight: bold;
+      box-shadow: 0 0 10px #ddd;
+      max-width: 600px;
+      margin-left: auto;
+      margin-right: auto;
     }
-
-    .left-column, .right-column {
-      flex: 1 1 50%;
-      display: flex;
-      flex-direction: column;
-      gap: 8px;
-    }
-
-    @media (max-width: 700px) {
-      .left-column, .right-column {
-        flex: 1 1 100%;
-      }
-    }
+    /* ادامه‌ی استایل‌ها برای منو از کد قبلی: (دقیقا همونه) */
+    .grid { display: flex; flex-wrap: wrap; gap: 8px; }
+    .left-column, .right-column { flex: 1 1 50%; display: flex; flex-direction: column; gap: 8px; }
+    @media (max-width: 700px) { .left-column, .right-column { flex: 1 1 100%; } }
 
     .category {
       background-color: rgba(255, 255, 255, 0.6);
       border-radius: 16px;
       box-shadow: 0 0 8px #ccc;
       padding: 1px 20px;
-      transition: all 0.3s ease;
     }
 
     .dropdown-toggle {
@@ -125,10 +201,10 @@
     .dropdown {
       max-height: 0;
       overflow: hidden;
-      padding: 0;
       transition: max-height 0.4s ease;
       list-style: none;
       margin: 0;
+      padding: 0;
     }
 
     .dropdown.open {
@@ -141,49 +217,85 @@
       justify-content: space-between;
       border-bottom: 1px dashed #ccc;
       padding: 3px 0;
-      color: #000;
     }
 
-    .price {
-      color: #000;
-      font-weight: normal;
-    }
-    .v-red {
-      color: #aa1010ee;
-      font-weight: bold;
-    }
+    .price { font-weight: normal; }
+    .v-red { color: #aa1010ee; font-weight: bold; }
   </style>
 </head>
 
 <body>
-  <h1 class="custom-title">
-    <img src="https://lunisia.github.io/cafe/coffee133.png" class="logo" />
-    <div class="title-text">
-      <div class="top-line">
-        <span class="symphony">Symphony</span>
-        <div class="right-block">
-          <span class="no">No.2</span>
-          <span class="cafe">Cafe</span>
+
+  <!-- صفحه خوش‌آمدگویی -->
+  <div class="welcome active">
+    <div class="custom-title">
+      <img src="https://lunisia.github.io/cafe/coffee133.png" class="logo" />
+      <div class="title-text">
+        <div class="top-line">
+          <span class="symphony">Symphony</span>
+          <div class="right-block">
+            <span class="no">No.2</span>
+            <span class="cafe">Cafe</span>
+          </div>
         </div>
       </div>
     </div>
-  </h1>
 
+    <div class="center-box">
+      <button class="big-button" onclick="showSection('menu')">منو</button>
+      <button class="big-button" onclick="showSection('about')">درباره ما</button>
+    </div>
+
+    <div class="notice-box">
+      <p>⏰ زمان پذیرایی یک ساعت بعد از دریافت سفارش می‌باشد</p>
+      <p>⚠️ لطفاً ما را از آلرژی‌های غذایی خود مطلع کنید</p>
+    </div>
+  </div>
+
+  <!-- درباره ما -->
+  <div class="about">
+    <div class="about-info">
+      <p>
+        <i class="fab fa-instagram"></i>
+        <strong>اینستاگرام:</strong>
+        <a href="instagram://user?username=this.is.symphony.cafe" target="_blank">this.is.symphony.cafe</a>
+      </p>
+      <p>
+        <i class="fab fa-telegram"></i>
+        <strong>تلگرام:</strong>
+        <a href="tg://resolve?domain=symphonylife" target="_blank">symphonylife</a>
+      </p>
+      <p>
+        <i class="fas fa-phone"></i>
+        <strong>تماس:</strong>
+        <a href="tel:09121234567">09121234567</a>
+      </p>
+
+      <button class="big-button" onclick="showSection('welcome')">بازگشت</button>
+    </div>
+  </div>
+
+  <!-- منو -->
   <div class="menu">
+    <!-- ✅ جملات بالای منو -->
+    <div class="menu-notes">
+      <p>🤚 از ما بپرسید</p>
+      <p>❄️ امکان سرو سرد</p>
+    </div>
     <div class="grid">
       <div class="right-column">
         <!-- شیر و قهوه -->
         <div class="category">
           <button class="dropdown-toggle">شیر و قهوه <span class="arrow">▼</span></button>
           <ul class="dropdown">
-            <li><span>اسپرسو</span><span class="price">۵۵/۷۳</span></li>
-            <li><span>آمریکانو❄︎</span><span class="price">۵۵/۷۳</span></li>
-            <li><span>رومانو❄︎</span><span class="price">۶۰/۷۸</span></li>
-            <li><span>کورتادو</span><span class="price">۶۷</span></li>
-            <li><span>کاپوچینو</span><span class="price">۷۷</span></li>
-            <li><span>لاته❄︎</span><span class="price">۷۷</span></li>
-            <li><span>ماکیاتو❄︎</span><span class="price">۸۷</span></li>
-            <li><span>موکا❄︎</span><span class="price">۸۷</span></li>
+            <li><span>اسپرسو</span><span class="price">67/87/107</span></li>
+            <li><span>آمریکانو❄︎</span><span class="price">67/87/107</span></li>
+            <li><span>رومانو❄︎</span><span class="price">87/107</span></li>
+            <li><span>کورتادو</span><span class="price">87</span></li>
+            <li><span>کاپوچینو</span><span class="price">89</span></li>
+            <li><span>لاته❄︎</span><span class="price">89</span></li>
+            <li><span>ماکیاتو❄︎</span><span class="price">125</span></li>
+            <li><span>موکا❄︎</span><span class="price">125</span></li>
           </ul>
         </div>
 
@@ -191,11 +303,11 @@
         <div class="category">
           <button class="dropdown-toggle">فیلتر کافی <span class="arrow">▼</span></button>
           <ul class="dropdown">
-            <li><span>ایروپرس❄︎</span><span class="price">۱۳۷</span></li>
-            <li><span><span class="v-red">V</span>60</span><span class="price">۱۲۷</span></li>
-            <li><span>کلد برو</span><span class="price">۹۹</span></li>
-            <li><span>کلور</span><span class="price">۱۲۷</span></li>
-            <li><span>فرانسه</span><span class="price">۱۰۷</span></li>
+            <li><span>ایروپرس❄︎</span><span class="price">165</span></li>
+            <li><span><span class="v-red">V</span>60</span><span class="price">155</span></li>
+            <li><span>کلد برو</span><span class="price">125</span></li>
+            <li><span>کلِور</span><span class="price"></span></li>
+            <li><span>فرانسه</span><span class="price">137</span></li>
           </ul>
         </div>
 
@@ -203,14 +315,14 @@
         <div class="category">
           <button class="dropdown-toggle">چای و دمنوش <span class="arrow">▼</span></button>
           <ul class="dropdown">
-            <li><span>چای سیاه</span><span class="price">۳۵</span></li>
-            <li><span>چای سبز</span><span class="price">۴۳</span></li>
-            <li><span>چای کرک</span><span class="price">۷۷</span></li>
-            <li><span>چای ماسالا</span><span class="price">۶۷</span></li>
-            <li><span>چای زعفران</span><span class="price">۴۱</span></li>
-            <li><span>دمنوش🤚</span><span class="price">۶۷</span></li>
-            <li><span>آیس تی(سرد)🤚</span><span class="price">۶۵</span></li>
-            <li><span>چای انبه</span><span class="price">۵۵</span></li>
+            <li><span>چای سیاه</span><span class="price">49</span></li>
+            <li><span>چای سبز</span><span class="price">63</span></li>
+            <li><span>چای کرک</span><span class="price">85</span></li>
+            <li><span>چای ماسالا</span><span class="price">79</span></li>
+            <li><span>چای زعفران</span><span class="price">59</span></li>
+            <li><span>دمنوش🤚</span><span class="price">77</span></li>
+            <li><span>آیس تی(سرد)🤚</span><span class="price">75</span></li>
+            <li><span>چای انبه</span><span class="price">75</span></li>
           </ul>
         </div>
 
@@ -218,15 +330,15 @@
         <div class="category">
           <button class="dropdown-toggle">سایر <span class="arrow">▼</span></button>
           <ul class="dropdown">
-            <li><span>هات چاکلت</span><span class="price">۶۳</span></li>
-            <li><span>نوتلا اکستریم</span><span class="price">۷۵</span></li>
-            <li><span>بیسکو اکستریم</span><span class="price">۷۵</span></li>
-            <li><span>پینات اکستریم</span><span class="price">۷۵</span></li>
-            <li><span>اسنیکرز</span><span class="price">۷۵</span></li>
-            <li><span>نسکافه</span><span class="price">۵۹</span></li>
-            <li><span>شیر عسل دارچین</span><span class="price">۵۹</span></li>
-            <li><span>آفوگاتو (سرد)</span><span class="price">۷۵</span></li>
-            <li><span>ولوت کافی (سرد)🤚</span><span class="price">۱۱۷</span></li>
+            <li><span>هات چاکلت</span><span class="price">77</span></li>
+            <li><span>نوتلا اکستریم</span><span class="price">89</span></li>
+            <li><span>بیسکو اکستریم</span><span class="price">89</span></li>
+            <li><span>پینات اکستریم</span><span class="price">89</span></li>
+            <li><span>اسنیکرز</span><span class="price">89</span></li>
+            <li><span>نسکافه</span><span class="price">75</span></li>
+            <li><span>شیر عسل دارچین</span><span class="price">75</span></li>
+            <li><span>آفوگاتو (سرد)</span><span class="price">97</span></li>
+            <li><span>ولوت کافی (سرد)🤚</span><span class="price">137</span></li>
           </ul>
         </div>
       </div>
@@ -236,16 +348,16 @@
         <div class="category">
           <button class="dropdown-toggle">سردنوش <span class="arrow">▼</span></button>
           <ul class="dropdown">
-            <li><span>لیموناد</span><span class="price">۶۷</span></li>
-            <li><span>موهیتو</span><span class="price">۷۷</span></li>
-            <li><span>لمون بری</span><span class="price">۸۹</span></li>
-            <li><span>شربت خودمون🤚</span><span class="price">۸۹</span></li>
-            <li><span>بیدمشک بهار نارنج</span><span class="price">۷۷</span></li>
-            <li><span>خاکشیر لیمو</span><span class="price">۶۷</span></li>
-            <li><span>لیمو زعفران</span><span class="price">۷۷</span></li>
-            <li><span>خیار سکنجبین</span><span class="price">۷۷</span></li>
-            <li><span>تونیک / پیناک اسپرسو</span><span class="price">۹۹</span></li>
-            <li><span>آیس آمو</span><span class="price">۸۹</span></li>
+            <li><span>لیموناد</span><span class="price">75</span></li>
+            <li><span>موهیتو</span><span class="price">85</span></li>
+            <li><span>لمون بری</span><span class="price">99</span></li>
+            <li><span>شربت خودمون🤚</span><span class="price">99</span></li>
+            <li><span>بیدمشک بهار نارنج</span><span class="price">85</span></li>
+            <li><span>خاکشیر لیمو</span><span class="price">85</span></li>
+            <li><span>لیمو زعفران</span><span class="price">95</span></li>
+            <li><span>خیار سکنجبین</span><span class="price">95</span></li>
+            <li><span>تونیک / پیناک اسپرسو</span><span class="price">117</span></li>
+            <li><span>آیس آمو</span><span class="price">95</span></li>
           </ul>
         </div>
 
@@ -253,14 +365,14 @@
         <div class="category">
           <button class="dropdown-toggle">شیک <span class="arrow">▼</span></button>
           <ul class="dropdown">
-            <li><span>وانیل</span><span class="price">۸۹</span></li>
-            <li><span>شکلات فندق</span><span class="price">۱۲۷</span></li>
-            <li><span>اسپرسو</span><span class="price">۱۱۷</span></li>
-            <li><span>کارامل نمکی</span><span class="price">۱۳۷</span></li>
-            <li><span>لوتوس</span><span class="price">۱۲۷</span></li>
-            <li><span>چیز توت فرنگی</span><span class="price">۱۳۷</span></li>
-            <li><span>ارده</span><span class="price">۱۲۷</span></li>
-            <li><span>موکا</span><span class="price">۱۴۷</span></li>
+            <li><span>وانیل</span><span class="price">119</span></li>
+            <li><span>شکلات فندق</span><span class="price">165</span></li>
+            <li><span>اسپرسو</span><span class="price">165</span></li>
+            <li><span>کارامل نمکی</span><span class="price">155</span></li>
+            <li><span>لوتوس</span><span class="price">155</span></li>
+            <li><span>چیز توت فرنگی</span><span class="price">175</span></li>
+            <li><span>ارده</span><span class="price">145</span></li>
+            <li><span>موکا</span><span class="price">185</span></li>
           </ul>
         </div>
 
@@ -268,10 +380,10 @@
         <div class="category">
           <button class="dropdown-toggle">اسموتی🤚 <span class="arrow">▼</span></button>
           <ul class="dropdown">
-            <li><span>چیل</span><span class="price">۱۲۷</span></li>
-            <li><span>دیلن</span><span class="price">۱۲۷</span></li>
-            <li><span>لاکی</span><span class="price">۱۱۷</span></li>
-            <li><span>پانانا</span><span class="price">۱۱۷</span></li>
+            <li><span>چیل</span><span class="price">123</span></li>
+            <li><span>دیلن</span><span class="price">119</span></li>
+            <li><span>لاکی</span><span class="price">127</span></li>
+            <li><span>پانانا</span><span class="price">147</span></li>
             <li><span>روز</span><span class="price">🤚</span></li>
           </ul>
         </div>
@@ -280,13 +392,13 @@
         <div class="category">
           <button class="dropdown-toggle">کیک و دسر <span class="arrow">▼</span></button>
           <ul class="dropdown">
-            <li><span>کوکی شکلات گردو</span><span class="price">۳۷</span></li>
-            <li><span>کیک نوتلا</span><span class="price">۷۷</span></li>
-            <li><span>کیک هویج</span><span class="price">۸۷</span></li>
-            <li><span>تیرامیسو</span><span class="price">۱۰۷</span></li>
-            <li><span>چیز کیک</span><span class="price">۱۱۷</span></li>
+            <li><span>کوکی شکلات گردو</span><span class="price">45</span></li>
+            <li><span>کیک نوتلا</span><span class="price">117</span></li>
+            <li><span>کیک هویج</span><span class="price">127</span></li>
+            <li><span>تیرامیسو</span><span class="price">139</span></li>
+            <li><span>چیز کیک</span><span class="price">127</span></li>
             <li><span>کروسان</span><span class="price">🤚</span></li>
-            <li><span>پنکیک</span><span class="price">۵۵</span></li>
+            <li><span>پنکیک</span><span class="price"></span></li>
           </ul>
         </div>
 
@@ -308,28 +420,37 @@
         </div>
       </div>
     </div>
+    <div style="text-align: center; margin: 20px 0;">
+  <button class="big-button" onclick="showSection('welcome')">بازگشت</button>
+</div>
   </div>
 
-   <!-- JavaScript -->
   <script>
-    const toggles = document.querySelectorAll(".dropdown-toggle");
+    function showSection(section) {
+      document.querySelectorAll('.welcome, .about, .menu').forEach(el => el.classList.remove('active'));
+      document.querySelector('.' + section).classList.add('active');
+    }
+        // باز و بسته کردن آیتم‌های منو
+    document.addEventListener("DOMContentLoaded", () => {
+      const toggles = document.querySelectorAll(".dropdown-toggle");
 
-    toggles.forEach(btn => {
-      btn.addEventListener("click", () => {
-        // بستن بقیه
-        document.querySelectorAll(".dropdown").forEach(drop => {
-          if (drop !== btn.nextElementSibling) {
-            drop.classList.remove("open");
-            drop.previousElementSibling.querySelector(".arrow").style.transform = "rotate(0deg)";
-          }
+      toggles.forEach(btn => {
+        btn.addEventListener("click", () => {
+          document.querySelectorAll(".dropdown").forEach(drop => {
+            if (drop !== btn.nextElementSibling) {
+              drop.classList.remove("open");
+              drop.previousElementSibling.querySelector(".arrow").style.transform = "rotate(0deg)";
+            }
+          });
+
+          const dropdown = btn.nextElementSibling;
+          const arrow = btn.querySelector(".arrow");
+          dropdown.classList.toggle("open");
+          arrow.style.transform = dropdown.classList.contains("open") ? "rotate(180deg)" : "rotate(0deg)";
         });
-
-        const dropdown = btn.nextElementSibling;
-        const arrow = btn.querySelector(".arrow");
-        dropdown.classList.toggle("open");
-        arrow.style.transform = dropdown.classList.contains("open") ? "rotate(180deg)" : "rotate(0deg)";
       });
     });
   </script>
+
 </body>
 </html>
